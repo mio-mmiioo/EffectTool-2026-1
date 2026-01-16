@@ -1,0 +1,156 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="Source\SceneFactory.cpp" />
+    <ClCompile Include="ImGui\imgui.cpp">
+      <Filter>ImGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGui\imgui_draw.cpp">
+      <Filter>ImGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGui\imgui_impl_dx9.cpp">
+      <Filter>ImGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGui\imgui_impl_dx11.cpp">
+      <Filter>ImGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGui\imgui_impl_win32.cpp">
+      <Filter>ImGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGui\imgui_ja_gryph_ranges.cpp">
+      <Filter>ImGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGui\imgui_tables.cpp">
+      <Filter>ImGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGui\imgui_widgets.cpp">
+      <Filter>ImGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Library\App.cpp">
+      <Filter>Library</Filter>
+    </ClCompile>
+    <ClCompile Include="Library\main.cpp">
+      <Filter>Library</Filter>
+    </ClCompile>
+    <ClCompile Include="Library\ObjectManager.cpp">
+      <Filter>Library</Filter>
+    </ClCompile>
+    <ClCompile Include="Library\SceneManager.cpp">
+      <Filter>Library</Filter>
+    </ClCompile>
+    <ClCompile Include="Library\Time.cpp">
+      <Filter>Library</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\BootScene.cpp">
+      <Filter>BootScene</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\MyLibrary\Object3D.cpp">
+      <Filter>MyLibrary</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\MyLibrary\Input.cpp">
+      <Filter>MyLibrary</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\MyLibrary\CsvReader.cpp">
+      <Filter>MyLibrary</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\MyLibrary\Light.cpp">
+      <Filter>MyLibrary</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ToolScene\ToolScene.cpp">
+      <Filter>ToolScene</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Source\Screen.h" />
+    <ClInclude Include="Source\SceneFactory.h" />
+    <ClInclude Include="ImGui\imconfig.h">
+      <Filter>ImGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGui\imgui.h">
+      <Filter>ImGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGui\imgui_impl_dx9.h">
+      <Filter>ImGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGui\imgui_impl_dx11.h">
+      <Filter>ImGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGui\imgui_impl_dxlib.hpp">
+      <Filter>ImGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGui\imgui_impl_win32.h">
+      <Filter>ImGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGui\imgui_internal.h">
+      <Filter>ImGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGui\imstb_rectpack.h">
+      <Filter>ImGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGui\imstb_textedit.h">
+      <Filter>ImGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGui\imstb_truetype.h">
+      <Filter>ImGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Library\App.h">
+      <Filter>Library</Filter>
+    </ClInclude>
+    <ClInclude Include="Library\ObjectManager.h">
+      <Filter>Library</Filter>
+    </ClInclude>
+    <ClInclude Include="Library\GameObject.h">
+      <Filter>Library</Filter>
+    </ClInclude>
+    <ClInclude Include="Library\SceneManager.h">
+      <Filter>Library</Filter>
+    </ClInclude>
+    <ClInclude Include="Library\Time.h">
+      <Filter>Library</Filter>
+    </ClInclude>
+    <ClInclude Include="Library\SceneBase.h">
+      <Filter>Library</Filter>
+    </ClInclude>
+    <ClInclude Include="Library\myDxLib.h">
+      <Filter>Library</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\BootScene.h">
+      <Filter>BootScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\MyLibrary\Object3D.h">
+      <Filter>MyLibrary</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\MyLibrary\Input.h">
+      <Filter>MyLibrary</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\MyLibrary\Color.h">
+      <Filter>MyLibrary</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\MyLibrary\CsvReader.h">
+      <Filter>MyLibrary</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\MyLibrary\Light.h">
+      <Filter>MyLibrary</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ToolScene\ToolScene.h">
+      <Filter>ToolScene</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Library">
+      <UniqueIdentifier>{5fb3f44e-3bfe-4b8c-b744-e3f7e9212b99}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ImGUI">
+      <UniqueIdentifier>{6e4e5e47-ba6c-4981-8ba4-82e7e4e89b95}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BootScene">
+      <UniqueIdentifier>{f2013283-74ca-43a3-b381-3b28b3d17b4b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MyLibrary">
+      <UniqueIdentifier>{d133a9e3-eda6-41d0-a5af-d0259355f2fd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ToolScene">
+      <UniqueIdentifier>{24e3dd02-d333-40a2-925b-4b2809135972}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
