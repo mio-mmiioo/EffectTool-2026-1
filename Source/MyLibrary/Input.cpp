@@ -31,7 +31,7 @@ namespace Input
 
 void Input::InitActionMap()
 {
-
+    inputActionMap["changeCamera"] = { {InputType::keyboard, KEY_INPUT_C} }; // ƒJƒƒ‰‚ÌØ‚è‘Ö‚¦
 }
 
 void Input::StateUpdate()

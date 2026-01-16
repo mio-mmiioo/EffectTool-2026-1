@@ -26,5 +26,3 @@ private:
 	};
 	void ReadMappingData(std::string filename);
 };
-
-

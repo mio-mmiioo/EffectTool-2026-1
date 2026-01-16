@@ -1,8 +1,8 @@
 #include "Stage.h"
 #include <assert.h>
 #include "../../MyLibrary/CsvReader.h"
-#include "../Player.h"
-#include "../Enemy/Enemy.h"
+#include "../User.h"
+//#include "../Enemy/Enemy.h"
 #include "StageObject.h"
 
 namespace STAGE
@@ -34,7 +34,7 @@ void Stage::ReadMappingData(std::string filename)
 
 	for (int line = 0; line < csv->GetLines(); line++) {
 		int sortNumber = csv->GetInt(line, DATA_NUM::OBJECT);
-		
+
 		t.position_.x = csv->GetFloat(line, DATA_NUM::POSITION_X);
 		t.position_.y = csv->GetFloat(line, DATA_NUM::POSITION_Y);
 		t.position_.z = csv->GetFloat(line, DATA_NUM::POSITION_Z);
@@ -42,7 +42,7 @@ void Stage::ReadMappingData(std::string filename)
 		hp = csv->GetInt(line, DATA_NUM::HP);
 
 		if (sortNumber == OBJECT_SORT::OBJ_PLAYER) {
-			new Player(t.position_, hp);
+			new User(t.position_);
 		}
 		else
 		{
@@ -57,7 +57,7 @@ void Stage::ReadMappingData(std::string filename)
 			if (sortNumber == OBJECT_SORT::OBJ_CHARA) {
 				int enemyNumber = csv->GetInt(line, DATA_NUM::NUMBER);
 				sprintf_s<STAGE::DATA_SIZE>(file, "enemy%03d", csv->GetInt(line, DATA_NUM::NUMBER));
-				Enemy::CreateEnemy(enemyNumber, file, t, hp, score);
+				//Enemy::CreateEnemy(enemyNumber, file, t, hp, score);
 			}
 			else if (sortNumber == OBJECT_SORT::OBJ_OBJECT) {
 				sprintf_s<STAGE::DATA_SIZE>(file, "Stage_Obj%03d", csv->GetInt(line, DATA_NUM::NUMBER));

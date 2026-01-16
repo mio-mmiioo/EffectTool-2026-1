@@ -160,7 +160,11 @@
     <ClInclude Include="Source\MyLibrary\Object3D.h" />
     <ClInclude Include="Source\Screen.h" />
     <ClInclude Include="Source\SceneFactory.h" />
+    <ClInclude Include="Source\ToolScene\Camera.h" />
+    <ClInclude Include="Source\ToolScene\Stage\Stage.h" />
+    <ClInclude Include="Source\ToolScene\Stage\StageObject.h" />
     <ClInclude Include="Source\ToolScene\ToolScene.h" />
+    <ClInclude Include="Source\ToolScene\User.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ImGui\imgui.cpp" />
@@ -182,7 +186,11 @@
     <ClCompile Include="Source\MyLibrary\Light.cpp" />
     <ClCompile Include="Source\MyLibrary\Object3D.cpp" />
     <ClCompile Include="Source\SceneFactory.cpp" />
+    <ClCompile Include="Source\ToolScene\Camera.cpp" />
+    <ClCompile Include="Source\ToolScene\Stage\Stage.cpp" />
+    <ClCompile Include="Source\ToolScene\Stage\StageObject.cpp" />
     <ClCompile Include="Source\ToolScene\ToolScene.cpp" />
+    <ClCompile Include="Source\ToolScene\User.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

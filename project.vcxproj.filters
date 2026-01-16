@@ -59,6 +59,18 @@
     <ClCompile Include="Source\ToolScene\ToolScene.cpp">
       <Filter>ToolScene</Filter>
     </ClCompile>
+    <ClCompile Include="Source\ToolScene\Camera.cpp">
+      <Filter>ToolScene</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ToolScene\User.cpp">
+      <Filter>ToolScene</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ToolScene\Stage\Stage.cpp">
+      <Filter>ToolScene\Stage</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ToolScene\Stage\StageObject.cpp">
+      <Filter>ToolScene\Stage</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Screen.h" />
@@ -135,6 +147,18 @@
     <ClInclude Include="Source\ToolScene\ToolScene.h">
       <Filter>ToolScene</Filter>
     </ClInclude>
+    <ClInclude Include="Source\ToolScene\Camera.h">
+      <Filter>ToolScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ToolScene\User.h">
+      <Filter>ToolScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ToolScene\Stage\Stage.h">
+      <Filter>ToolScene\Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ToolScene\Stage\StageObject.h">
+      <Filter>ToolScene\Stage</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Library">
@@ -151,6 +175,9 @@
     </Filter>
     <Filter Include="ToolScene">
       <UniqueIdentifier>{24e3dd02-d333-40a2-925b-4b2809135972}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ToolScene\Stage">
+      <UniqueIdentifier>{0d0096d3-e94c-40dd-9d1b-796bde827c13}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
