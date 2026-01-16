@@ -59,12 +59,6 @@
     <ClCompile Include="Source\ToolScene\ToolScene.cpp">
       <Filter>ToolScene</Filter>
     </ClCompile>
-    <ClCompile Include="Source\ToolScene\Camera.cpp">
-      <Filter>ToolScene</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\ToolScene\User.cpp">
-      <Filter>ToolScene</Filter>
-    </ClCompile>
     <ClCompile Include="Source\ToolScene\Stage\Stage.cpp">
       <Filter>ToolScene\Stage</Filter>
     </ClCompile>
@@ -76,6 +70,15 @@
     </ClCompile>
     <ClCompile Include="Source\ToolScene\ToolMaster.cpp">
       <Filter>ToolScene</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ToolScene\User\Camera.cpp">
+      <Filter>ToolScene\User</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ToolScene\User\User.cpp">
+      <Filter>ToolScene\User</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ToolScene\User\Gun.cpp">
+      <Filter>ToolScene\User</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -153,12 +156,6 @@
     <ClInclude Include="Source\ToolScene\ToolScene.h">
       <Filter>ToolScene</Filter>
     </ClInclude>
-    <ClInclude Include="Source\ToolScene\Camera.h">
-      <Filter>ToolScene</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\ToolScene\User.h">
-      <Filter>ToolScene</Filter>
-    </ClInclude>
     <ClInclude Include="Source\ToolScene\Stage\Stage.h">
       <Filter>ToolScene\Stage</Filter>
     </ClInclude>
@@ -170,6 +167,15 @@
     </ClInclude>
     <ClInclude Include="Source\ToolScene\ToolMaster.h">
       <Filter>ToolScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ToolScene\User\Camera.h">
+      <Filter>ToolScene\User</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ToolScene\User\User.h">
+      <Filter>ToolScene\User</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ToolScene\User\Gun.h">
+      <Filter>ToolScene\User</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -190,6 +196,9 @@
     </Filter>
     <Filter Include="ToolScene\Stage">
       <UniqueIdentifier>{0d0096d3-e94c-40dd-9d1b-796bde827c13}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ToolScene\User">
+      <UniqueIdentifier>{a53c87b8-eae6-406c-aacc-7f60b713d500}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

@@ -4,7 +4,7 @@
 class StageObject : public Object3D
 {
 public:
-	StageObject(const std::string& fileName, const Transform& t, int hp, int score);
+	StageObject(int objectNumber, const std::string& fileName, const Transform& t, int hp, int score);
 	~StageObject();
 
 	void Update() override;

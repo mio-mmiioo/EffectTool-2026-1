@@ -45,10 +45,10 @@ bool Collision::CheckHitObject(VECTOR3 pos1, VECTOR3 pos2, VECTOR3* hit)
 		*hit = now;
 	}
 
-	// 当たったオブジェクトの種類から、判別
+	// hpが0以下で存在する → 壊れないオブジェクト
 	if (checkObject != nullptr)
 	{
-		if (checkObject->GetObjectNumber() == OBJECT_SORT::OBJ_OBJECT)
+		if (checkObject->GetHp() <= 0)
 		{
 			found = false;
 		}

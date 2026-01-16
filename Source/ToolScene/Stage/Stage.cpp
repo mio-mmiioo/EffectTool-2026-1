@@ -53,16 +53,13 @@ void Stage::ReadMappingData(std::string filename)
 			t.scale_.y = csv->GetFloat(line, DATA_NUM::SCALE_Y);
 			t.scale_.z = csv->GetFloat(line, DATA_NUM::SCALE_Z);
 			score = csv->GetInt(line, DATA_NUM::SCORE);
-
+			
+			sprintf_s<STAGE::DATA_SIZE>(file, "Stage_Obj%03d", csv->GetInt(line, DATA_NUM::NUMBER));
 			if (sortNumber == OBJECT_SORT::OBJ_CHARA) {
 				int enemyNumber = csv->GetInt(line, DATA_NUM::NUMBER);
 				sprintf_s<STAGE::DATA_SIZE>(file, "enemy%03d", csv->GetInt(line, DATA_NUM::NUMBER));
-				//Enemy::CreateEnemy(enemyNumber, file, t, hp, score);
 			}
-			else if (sortNumber == OBJECT_SORT::OBJ_OBJECT) {
-				sprintf_s<STAGE::DATA_SIZE>(file, "Stage_Obj%03d", csv->GetInt(line, DATA_NUM::NUMBER));
-				StageObject* obj = new StageObject(file, t, hp, score);
-			}
+			StageObject* obj = new StageObject(sortNumber, file, t, hp, score);
 		}
 	}
 	delete csv;

@@ -2,8 +2,9 @@
 #include "../../ImGui/imgui.h"
 #include "../MyLibrary/Light.h"
 #include "Stage/Stage.h"
+#include "User/User.h"
 #include "Collision.h"
-#include "User.h"
+
 
 namespace ToolMaster
 {

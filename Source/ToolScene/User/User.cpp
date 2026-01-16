@@ -1,10 +1,10 @@
 #include "User.h"
 #include <assert.h>
 #include "Camera.h"
-#include "../../ImGui/imgui.h"
-#include "../MyLibrary/Input.h"
-#include "../MyLibrary/Light.h"
-#include "ToolMaster.h"
+#include "../../../ImGui/imgui.h"
+#include "../../MyLibrary/Input.h"
+#include "../../MyLibrary/Light.h"
+#include "../ToolMaster.h"
 
 namespace USER
 {
@@ -62,7 +62,35 @@ void User::Update()
 	GetMousePoint(&mouseX_, &mouseY_);
 
 	ImGuiInput();
+
+	// ”­–C
+	if (Input::IsKeyDown("outBullet"))
+	{
+		//if (gun_->OutBullet() == true)
+		//{
+		//	isAttack_ = true;
+		//}
+	}
+	else
+	{
+		isAttack_ = false;
+	}
 	
+	// Æ€‚Ì“–‚½‚è”»’è
+	{
+		VECTOR ScreenPosition = { (float)mouseX_, (float)mouseY_, 1.0f };
+		wPointerPosition_ = ConvScreenPosToWorldPos(ScreenPosition);
+		startPosition_ = transform_.position_ + LOOK_HEIGHT;
+		if (ToolMaster::IsBulletHit(startPosition_, wPointerPosition_) == true)
+		{
+			isHit_ = true;
+		}
+		else
+		{
+			isHit_ = false;
+		}
+	}
+
 	// “ü—Í‰ñ“]
 	{
 		if (Input::IsKeyKeepDown("rotateRight"))

@@ -37,6 +37,8 @@ void Input::InitActionMap()
     inputActionMap["rotateLeft"] = { {InputType::keyboard, KEY_INPUT_A} };  // ç∂âÒì]
     inputActionMap["moveFront"] = { {InputType::keyboard, KEY_INPUT_W} };   // ëOêi
     inputActionMap["moveBack"] = { {InputType::keyboard, KEY_INPUT_S} };    // å„ëﬁ
+
+    inputActionMap["outBullet"] = { {InputType::mouse, MOUSE_INPUT_LEFT} }; // î≠ñC
 }
 
 void Input::StateUpdate()

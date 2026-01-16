@@ -1,5 +1,5 @@
 #pragma once
-#include "../MyLibrary/Object3D.h"
+#include "../../MyLibrary/Object3D.h"
 
 class Camera;
 

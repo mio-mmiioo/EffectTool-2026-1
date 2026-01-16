@@ -3,7 +3,7 @@
 #include "../Collision.h"
 //#include "../../MyLibrary/Observer.h"
 
-StageObject::StageObject(const std::string& fileName, const Transform& t, int hp, int score)
+StageObject::StageObject(int objectNumber, const std::string& fileName, const Transform& t, int hp, int score)
 {
 	const std::string folder = "data/model/";
 	hModel_ = MV1LoadModel((folder + fileName + ".mv1").c_str());
@@ -17,19 +17,8 @@ StageObject::StageObject(const std::string& fileName, const Transform& t, int hp
 	MV1SetupCollInfo(hitModel_);
 
 	hp_ = hp;
-	if (hp > 0)
-	{
-		isDestructible_ = true;
-		objectNumber_ = OBJECT_SORT::OBJ_OBJECT_D;
-	}
-	else
-	{
-		isDestructible_ = false;
-		objectNumber_ = OBJECT_SORT::OBJ_OBJECT;
-	}
-
+	objectNumber_ = objectNumber;
 	score_ = score;
-
 	Collision::AddObject(this);
 }
 
