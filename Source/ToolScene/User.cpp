@@ -2,6 +2,9 @@
 #include <assert.h>
 #include "Camera.h"
 #include "../../ImGui/imgui.h"
+#include "../MyLibrary/Input.h"
+#include "../MyLibrary/Light.h"
+#include "ToolMaster.h"
 
 namespace USER
 {
@@ -35,14 +38,15 @@ User::User(const VECTOR3& position)
 	MV1SetupCollInfo(hModel_);
 
 	// 照準(aiming)
-	//SetAimingImage(aiming_, "data/image/pointer1.png");
-	//SetAimingImage(hitAiming_, "data/image/pointer2.png");
-	//SetAimingImage(reload_, "data/image/reload.png");
+	SetAimingImage(aiming_, "data/image/pointer1.png");
+	SetAimingImage(hitAiming_, "data/image/pointer2.png");
 
 	rotateSpeed_ = USER::ROTATE_SPEED;
 	moveSpeed_ = USER::MOVE_SPEED;
 
 	camera_ = new Camera();
+
+	SetDrawOrder(-100);
 }
 
 User::User()
@@ -56,9 +60,40 @@ User::~User()
 void User::Update()
 {
 	GetMousePoint(&mouseX_, &mouseY_);
+
 	ImGuiInput();
+	
+	// 入力回転
+	{
+		if (Input::IsKeyKeepDown("rotateRight"))
+		{
+			transform_.rotation_.y += rotateSpeed_ * DegToRad;
+		}
+		if (Input::IsKeyKeepDown("rotateLeft"))
+		{
+			transform_.rotation_.y -= rotateSpeed_ * DegToRad;
+		}
+	}
+
+	// 入力移動
+	{
+		VECTOR3 velocity;// 移動ベクトル　velocity→進行方向
+		velocity = VECTOR3(0, 0, 1) * moveSpeed_ * MGetRotY(transform_.rotation_.y);//移動方向書いた後、移動距離、回転行列
+
+		if (Input::IsKeyKeepDown("moveFront"))
+		{
+			transform_.position_ += velocity;
+		}
+		else if (Input::IsKeyKeepDown("moveBack"))
+		{
+			transform_.position_ -= velocity;
+		}
+	}
+
+	ToolMaster::CheckSetPosition(this, &velocityY_, distanceR_, gravity_);
 
 	camera_->SetUserPosition(transform_);
+	Light::SetPosition(transform_.position_);
 
 	transform_.MakeLocalMatrix();
 	MV1SetMatrix(hModel_, transform_.GetLocalMatrix());
@@ -67,6 +102,16 @@ void User::Update()
 
 void User::Draw()
 {
+	Object3D::Draw();
+	// 照準の描画
+	if (isHit_ == true)
+	{
+		DrawGraph(mouseX_ - hitAiming_.halfWidth, mouseY_ - hitAiming_.halfHeight, hitAiming_.hImage, TRUE); // Actorに当たる
+	}
+	else
+	{
+		DrawGraph(mouseX_ - aiming_.halfWidth, mouseY_ - aiming_.halfHeight, aiming_.hImage, TRUE); // 標準
+	}
 }
 
 void User::ImGuiInput()
@@ -86,4 +131,13 @@ void User::ImGuiInput()
 
 	transform_.position_ = VECTOR3(p[0], p[1], p[2]);
 	transform_.rotation_ = VECTOR3(r[0], r[1], r[2]);
+}
+
+void User::SetAimingImage(image& i, std::string path)
+{
+	i.hImage = LoadGraph(path.c_str());
+	assert(i.hImage > 0);
+	GetGraphSize(i.hImage, &i.halfWidth, &i.halfHeight);
+	i.halfWidth = i.halfWidth / 2;
+	i.halfHeight = i.halfHeight / 2;
 }

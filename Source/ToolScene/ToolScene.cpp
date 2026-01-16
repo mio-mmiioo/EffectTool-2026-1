@@ -1,19 +1,22 @@
 #include "ToolScene.h"
-#include "Stage/Stage.h"
+#include "ToolMaster.h"
 
 ToolScene::ToolScene()
 {
-	new Stage(12);
+	ToolMaster::Init();
 }
 
 ToolScene::~ToolScene()
 {
+	ToolMaster::Release();
 }
 
 void ToolScene::Update()
 {
+	ToolMaster::Update();
 }
 
 void ToolScene::Draw()
 {
+	ToolMaster::Draw();
 }

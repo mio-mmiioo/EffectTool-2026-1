@@ -1,6 +1,6 @@
 #include "StageObject.h"
 #include <assert.h>
-//#include "../Collision.h"
+#include "../Collision.h"
 //#include "../../MyLibrary/Observer.h"
 
 StageObject::StageObject(const std::string& fileName, const Transform& t, int hp, int score)
@@ -30,7 +30,7 @@ StageObject::StageObject(const std::string& fileName, const Transform& t, int hp
 
 	score_ = score;
 
-	//Collision::AddObject(this);
+	Collision::AddObject(this);
 }
 
 StageObject::~StageObject()

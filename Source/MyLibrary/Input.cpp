@@ -32,6 +32,11 @@ namespace Input
 void Input::InitActionMap()
 {
     inputActionMap["changeCamera"] = { {InputType::keyboard, KEY_INPUT_C} }; // カメラの切り替え
+
+    inputActionMap["rotateRight"] = { {InputType::keyboard, KEY_INPUT_D} }; // 右回転
+    inputActionMap["rotateLeft"] = { {InputType::keyboard, KEY_INPUT_A} };  // 左回転
+    inputActionMap["moveFront"] = { {InputType::keyboard, KEY_INPUT_W} };   // 前進
+    inputActionMap["moveBack"] = { {InputType::keyboard, KEY_INPUT_S} };    // 後退
 }
 
 void Input::StateUpdate()
