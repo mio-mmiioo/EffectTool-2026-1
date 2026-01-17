@@ -1,10 +1,12 @@
 #include "User.h"
 #include <assert.h>
-#include "Camera.h"
 #include "../../../ImGui/imgui.h"
 #include "../../MyLibrary/Input.h"
 #include "../../MyLibrary/Light.h"
 #include "../ToolMaster.h"
+#include "../Collision.h"
+#include "Camera.h"
+#include "Gun.h"
 
 namespace USER
 {
@@ -45,6 +47,7 @@ User::User(const VECTOR3& position)
 	moveSpeed_ = USER::MOVE_SPEED;
 
 	camera_ = new Camera();
+	Gun::Init();
 
 	SetDrawOrder(-100);
 }
@@ -59,21 +62,20 @@ User::~User()
 
 void User::Update()
 {
-	GetMousePoint(&mouseX_, &mouseY_);
+	isAttack_ = false;
 
+	GetMousePoint(&mouseX_, &mouseY_);
+	Gun::Update();
 	ImGuiInput();
 
 	// î≠ñC
 	if (Input::IsKeyDown("outBullet"))
 	{
-		//if (gun_->OutBullet() == true)
-		//{
-		//	isAttack_ = true;
-		//}
-	}
-	else
-	{
-		isAttack_ = false;
+		if (Gun::OutBullet() == true)
+		{
+			isAttack_ = true;
+			Collision::AttackedObject(Gun::GetAttack());
+		}
 	}
 	
 	// è∆èÄÇÃìñÇΩÇËîªíË
@@ -159,6 +161,8 @@ void User::ImGuiInput()
 
 	transform_.position_ = VECTOR3(p[0], p[1], p[2]);
 	transform_.rotation_ = VECTOR3(r[0], r[1], r[2]);
+
+	Gun::ImGuiInput();
 }
 
 void User::SetAimingImage(image& i, std::string path)

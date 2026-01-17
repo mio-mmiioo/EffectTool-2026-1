@@ -6,4 +6,7 @@ namespace Gun
 	void Update();
 	void Draw();
 	void Release();
+	bool OutBullet();
+	int GetAttack();
+	void ImGuiInput();
 }

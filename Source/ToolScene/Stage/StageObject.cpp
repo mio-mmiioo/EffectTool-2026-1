@@ -1,7 +1,6 @@
 #include "StageObject.h"
 #include <assert.h>
 #include "../Collision.h"
-//#include "../../MyLibrary/Observer.h"
 
 StageObject::StageObject(int objectNumber, const std::string& fileName, const Transform& t, int hp, int score)
 {
@@ -19,6 +18,16 @@ StageObject::StageObject(int objectNumber, const std::string& fileName, const Tr
 	hp_ = hp;
 	objectNumber_ = objectNumber;
 	score_ = score;
+
+	if (hp_ <= 0)
+	{
+		isDestructible_ = false;
+	}
+	else
+	{
+		isDestructible_ = true;
+	}
+
 	Collision::AddObject(this);
 }
 
@@ -40,7 +49,6 @@ void StageObject::Update()
 	if (isDestructible_ == true && hp_ <= 0)
 	{
 		DestroyMe();
-		//Observer::AddScore(score_);
 		return;
 	}
 }

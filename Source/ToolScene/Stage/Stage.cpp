@@ -1,7 +1,7 @@
 #include "Stage.h"
 #include <assert.h>
 #include "../../MyLibrary/CsvReader.h"
-#include "../User.h"
+#include "../User/User.h"
 //#include "../Enemy/Enemy.h"
 #include "StageObject.h"
 
