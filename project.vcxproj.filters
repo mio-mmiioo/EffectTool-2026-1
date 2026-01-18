@@ -80,6 +80,9 @@
     <ClCompile Include="Source\ToolScene\User\Gun.cpp">
       <Filter>ToolScene\User</Filter>
     </ClCompile>
+    <ClCompile Include="Source\MyLibrary\Observer.cpp">
+      <Filter>MyLibrary</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Screen.h" />
@@ -176,6 +179,9 @@
     </ClInclude>
     <ClInclude Include="Source\ToolScene\User\Gun.h">
       <Filter>ToolScene\User</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\MyLibrary\Observer.h">
+      <Filter>MyLibrary</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

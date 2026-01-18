@@ -8,7 +8,7 @@ namespace Light {
 	const VECTOR INIT_LIGHT_POSITION = { 0.0f, -2000.0f, 0.0f };
 	const float RANGE = 2000.0f;
 	const float ATTEN0 = 0.0f;
-	const float ATTEN1 = 0.003f;
+	const float ATTEN1 = 0.001f;
 	const float ATTEN2 = 0.0f;
 
 	VECTOR3 lightPosition = INIT_LIGHT_POSITION + (LOOK_HEIGHT / 2.0f);

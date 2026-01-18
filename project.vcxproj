@@ -158,6 +158,7 @@
     <ClInclude Include="Source\MyLibrary\Input.h" />
     <ClInclude Include="Source\MyLibrary\Light.h" />
     <ClInclude Include="Source\MyLibrary\Object3D.h" />
+    <ClInclude Include="Source\MyLibrary\Observer.h" />
     <ClInclude Include="Source\Screen.h" />
     <ClInclude Include="Source\SceneFactory.h" />
     <ClInclude Include="Source\ToolScene\Collision.h" />
@@ -188,6 +189,7 @@
     <ClCompile Include="Source\MyLibrary\Input.cpp" />
     <ClCompile Include="Source\MyLibrary\Light.cpp" />
     <ClCompile Include="Source\MyLibrary\Object3D.cpp" />
+    <ClCompile Include="Source\MyLibrary\Observer.cpp" />
     <ClCompile Include="Source\SceneFactory.cpp" />
     <ClCompile Include="Source\ToolScene\Collision.cpp" />
     <ClCompile Include="Source\ToolScene\Stage\Stage.cpp" />

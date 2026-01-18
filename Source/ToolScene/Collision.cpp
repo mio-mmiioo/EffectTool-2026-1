@@ -1,4 +1,5 @@
 #include "Collision.h"
+#include "../MyLibrary/Observer.h"
 
 namespace Collision
 {
@@ -43,6 +44,7 @@ bool Collision::CheckHitObject(VECTOR3 pos1, VECTOR3 pos2, VECTOR3* hit)
 	if (hit != nullptr)
 	{
 		*hit = now;
+		Observer::SetHitPosition(*hit);
 	}
 
 	// hpが0以下で存在する → 壊れないオブジェクト
@@ -65,11 +67,12 @@ bool Collision::CheckDistanceVertexAndVertex(VECTOR3 pos1, VECTOR3 pos2, float d
 	return false;
 }
 
-void Collision::AttackedObject(int num)
+void Collision::AttackedObject(int attackPower)
 {
 	if (checkObject != nullptr)
 	{
-		checkObject->AddHp(num);
+		checkObject->AddHp(attackPower);
+		Observer::SetAttackPower(attackPower);
 	}
 }
 

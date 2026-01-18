@@ -1,6 +1,7 @@
 #include "ToolMaster.h"
 #include "../../ImGui/imgui.h"
 #include "../MyLibrary/Light.h"
+#include "../MyLibrary/Observer.h"
 #include "Stage/Stage.h"
 #include "User/User.h"
 #include "Collision.h"
@@ -30,6 +31,17 @@ void ToolMaster::Init()
 
 void ToolMaster::Update()
 {
+	// 最初
+	user = FindGameObject<User>();
+	
+
+	// 中身
+	ImGuiInput();
+
+
+
+	// 最後
+	Light::SetPosition(user->GetTransform().position_);
 	Light::Update();
 }
 
@@ -47,6 +59,13 @@ bool ToolMaster::IsBulletHit(VECTOR3 startPosition, VECTOR3 endPosition)
 {
 	// 敵、破壊可能オブジェクトにあたるならtrueを返す
 	VECTOR3 hit;
+
+	// Observer用
+	{
+		VECTOR3 vPowerDirection = endPosition - startPosition;
+		Observer::SetPowerDirection(vPowerDirection);
+	}
+
 	if (Collision::CheckHitObject(startPosition, endPosition, &hit) == true)
 	{
 		return true;
@@ -66,5 +85,12 @@ void ToolMaster::CheckSetPosition(Object3D* obj, float* velocityY, float distanc
 
 void ToolMaster::ImGuiInput()
 {
+	VECTOR3 p = Observer::GetHitPosition();
+	VECTOR3 d = Observer::GetPowerDirection();
 
+	ImGui::Begin("ToolMaster");
+	ImGui::Text("Attack Power : %d", Observer::GetAttackPower());
+	ImGui::Text("hitPosition   : (%04f, %04f, %04f)", p.x, p.y, p.z);
+	ImGui::Text("PowerDirection: (%04f, %04f, %04f)", d.x, d.y, d.z);
+	ImGui::End();
 }

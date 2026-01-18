@@ -47,7 +47,7 @@ bool Gun::OutBullet()
 
 int Gun::GetAttack()
 {
-	return attack;
+	return -attack;
 }
 
 void Gun::ImGuiInput()

@@ -2,7 +2,6 @@
 #include <assert.h>
 #include "../../../ImGui/imgui.h"
 #include "../../MyLibrary/Input.h"
-#include "../../MyLibrary/Light.h"
 #include "../ToolMaster.h"
 #include "../Collision.h"
 #include "Camera.h"
@@ -83,6 +82,7 @@ void User::Update()
 		VECTOR ScreenPosition = { (float)mouseX_, (float)mouseY_, 1.0f };
 		wPointerPosition_ = ConvScreenPosToWorldPos(ScreenPosition);
 		startPosition_ = transform_.position_ + LOOK_HEIGHT;
+
 		if (ToolMaster::IsBulletHit(startPosition_, wPointerPosition_) == true)
 		{
 			isHit_ = true;
@@ -123,7 +123,6 @@ void User::Update()
 	ToolMaster::CheckSetPosition(this, &velocityY_, distanceR_, gravity_);
 
 	camera_->SetUserPosition(transform_);
-	Light::SetPosition(transform_.position_);
 
 	transform_.MakeLocalMatrix();
 	MV1SetMatrix(hModel_, transform_.GetLocalMatrix());
