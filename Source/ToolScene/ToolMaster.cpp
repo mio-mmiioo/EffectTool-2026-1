@@ -3,6 +3,7 @@
 #include "../MyLibrary/Light.h"
 #include "../MyLibrary/Observer.h"
 #include "Stage/Stage.h"
+#include "Stage/SelectedObject.h"
 #include "User/User.h"
 #include "Collision.h"
 
@@ -63,6 +64,7 @@ bool ToolMaster::IsBulletHit(VECTOR3 startPosition, VECTOR3 endPosition)
 	// Observer用
 	{
 		VECTOR3 vPowerDirection = endPosition - startPosition;
+		vPowerDirection = VNorm(vPowerDirection);
 		Observer::SetPowerDirection(vPowerDirection);
 	}
 
@@ -83,6 +85,11 @@ void ToolMaster::CheckSetPosition(Object3D* obj, float* velocityY, float distanc
 	Collision::SetOnGround(obj, velocityY, gravity); // ステージの位置を確認し、空中に浮いていないか確認する 浮いていたら重力をかける
 }
 
+void ToolMaster::SelectObject()
+{
+	SelectedObject::SetSelecObject();
+}
+
 void ToolMaster::ImGuiInput()
 {
 	VECTOR3 p = Observer::GetHitPosition();
@@ -92,5 +99,13 @@ void ToolMaster::ImGuiInput()
 	ImGui::Text("Attack Power : %d", Observer::GetAttackPower());
 	ImGui::Text("hitPosition   : (%04f, %04f, %04f)", p.x, p.y, p.z);
 	ImGui::Text("PowerDirection: (%04f, %04f, %04f)", d.x, d.y, d.z);
+	
+	// 選択されたオブジェクトの情報
+	ImGui::Text("Select Object");
+	if (ImGui::Button("Deselect"))
+	{
+		SelectedObject::DeselectObject();
+	}
+
 	ImGui::End();
 }

@@ -162,6 +162,7 @@
     <ClInclude Include="Source\Screen.h" />
     <ClInclude Include="Source\SceneFactory.h" />
     <ClInclude Include="Source\ToolScene\Collision.h" />
+    <ClInclude Include="Source\ToolScene\Stage\SelectedObject.h" />
     <ClInclude Include="Source\ToolScene\Stage\Stage.h" />
     <ClInclude Include="Source\ToolScene\Stage\StageObject.h" />
     <ClInclude Include="Source\ToolScene\ToolMaster.h" />
@@ -192,6 +193,7 @@
     <ClCompile Include="Source\MyLibrary\Observer.cpp" />
     <ClCompile Include="Source\SceneFactory.cpp" />
     <ClCompile Include="Source\ToolScene\Collision.cpp" />
+    <ClCompile Include="Source\ToolScene\Stage\SelectedObject.cpp" />
     <ClCompile Include="Source\ToolScene\Stage\Stage.cpp" />
     <ClCompile Include="Source\ToolScene\Stage\StageObject.cpp" />
     <ClCompile Include="Source\ToolScene\ToolMaster.cpp" />

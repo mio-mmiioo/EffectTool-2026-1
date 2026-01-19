@@ -67,6 +67,14 @@ void User::Update()
 	Gun::Update();
 	ImGuiInput();
 
+	// オブジェクト選択
+	{
+		if (Input::IsKeyDown("selectObject"))
+		{
+
+		}
+	}
+
 	// 発砲
 	if (Input::IsKeyDown("outBullet"))
 	{

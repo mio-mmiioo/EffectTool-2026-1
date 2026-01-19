@@ -51,4 +51,7 @@ void StageObject::Update()
 		DestroyMe();
 		return;
 	}
+
+	// この下でエフェクトをいじる
+
 }
