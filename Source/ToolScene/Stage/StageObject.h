@@ -10,6 +10,11 @@ public:
 	void Update() override;
 
 private:
-	bool isDestructible_; // 壊れるものか true→ 壊れる
+	void ImGuiInput();
+	bool isDestructible_; // 壊れるものか true → 壊れる
 	int score_; // 得点
+
+	// ツールとして必要なもの
+	bool isGravity_; // 重力を加えるか true → 使用する
+
 };

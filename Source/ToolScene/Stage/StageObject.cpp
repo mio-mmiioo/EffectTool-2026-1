@@ -2,6 +2,12 @@
 #include <assert.h>
 #include "../Collision.h"
 #include "../../../ImGui/imgui.h"
+#include "../Effect.h"
+
+namespace STAGE_OBJECT
+{
+	const float GRAVITY = 0.05f;
+}
 
 StageObject::StageObject(int objectNumber, const std::string& fileName, const Transform& t, int hp, int score)
 {
@@ -31,6 +37,10 @@ StageObject::StageObject(int objectNumber, const std::string& fileName, const Tr
 	}
 
 	Collision::AddObject(this);
+
+	// ツールとして必要なものの初期化
+	isGravity_ = false;
+	velocityY_ = 0.0f;
 }
 
 StageObject::~StageObject()
@@ -59,18 +69,45 @@ void StageObject::Update()
 		return;
 	}
 
+	ImGuiInput();
 	// この下でエフェクトをいじる
-	ImGui::Begin("SelectdObject");
-	float p[3] = { transform_.position_.x, transform_.position_.y, transform_.position_.z };
-	//ImGui::InputFloat3("position", &p[3], "%.3f");
-	ImGui::Text("position");
-	ImGui::InputFloat("x:", &transform_.position_.x);
-	ImGui::InputFloat("y:", &transform_.position_.y);
-	ImGui::InputFloat("z:", &transform_.position_.z);
-	ImGui::End();
+	
+	if (isGravity_ == true)
+	{
+		Collision::SetOnGround(this, &velocityY_, STAGE_OBJECT::GRAVITY);
+	}
 
 
 	transform_.MakeLocalMatrix();
 	MV1SetMatrix(hModel_, transform_.GetLocalMatrix());
 	MV1RefreshCollInfo(hModel_);
+}
+
+void StageObject::ImGuiInput()
+{
+	ImGui::Begin("SelectdObject");
+	
+	// transform
+	{
+		ImGui::Text("position");
+		ImGui::InputFloat("position x:", &transform_.position_.x);
+		ImGui::InputFloat("position y:", &transform_.position_.y);
+		ImGui::InputFloat("position z:", &transform_.position_.z);
+
+		ImGui::Text("rotation");
+		ImGui::InputFloat("rotation x:", &transform_.rotation_.x);
+		ImGui::InputFloat("rotation y:", &transform_.rotation_.y);
+		ImGui::InputFloat("rotation z:", &transform_.rotation_.z);
+
+		ImGui::Text("scale");
+		ImGui::InputFloat("scale x:", &transform_.scale_.x);
+		ImGui::InputFloat("scale y:", &transform_.scale_.y);
+		ImGui::InputFloat("scale z:", &transform_.scale_.z);
+	}
+
+	ImGui::Checkbox("gravity", &isGravity_);
+
+	Effect::ImGuiInput();
+
+	ImGui::End();
 }
