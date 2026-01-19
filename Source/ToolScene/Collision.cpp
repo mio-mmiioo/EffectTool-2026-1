@@ -128,7 +128,13 @@ void Collision::CheckPush(Object3D* obj, VECTOR3 pos1, VECTOR3 pos2, float minDi
 	}
 }
 
-void Collision::SetSelectObject(Object3D* obj)
+void Collision::SetSelectObject()
 {
-	obj = checkObject;
+	checkObject->SetSelect(true);
 }
+
+void Collision::DeselectObject()
+{
+	checkObject->SetSelect(false);
+}
+

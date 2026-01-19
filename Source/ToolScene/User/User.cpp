@@ -71,7 +71,7 @@ void User::Update()
 	{
 		if (Input::IsKeyDown("selectObject"))
 		{
-
+			ToolMaster::SelectObject();
 		}
 	}
 

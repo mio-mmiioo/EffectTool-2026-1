@@ -63,6 +63,7 @@ public:
 	Transform GetTransform() { return transform_; } // transformの値を返す
 	int GetObjectNumber() { return objectNumber_; } // オブジェクトの種類の番号を返す
 	int GetHp() { return hp_; } // hpの値を返す
+	void SetSelect(bool flag) { isSelect_ = flag; }
 	void SetParent(Object3D* parent) { parent_ = parent; }
 	bool CollideLine(VECTOR3 pos1, VECTOR3 pos2, VECTOR3* hit = nullptr) const;
 	void SetPosition(VECTOR3 newPosition) { transform_.position_ = newPosition; }
@@ -73,6 +74,7 @@ protected:
 	int hModel_; // 本当に描画するモデル
 	int hitModel_; // 当たり判定用のモデル
 	bool isDraw_; // 描画するかどうか true → 描画する
+	bool isSelect_; // 選択されているか true → 選択されている
 	Transform transform_;
 	Object3D* parent_;
 

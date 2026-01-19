@@ -3,7 +3,6 @@
 #include "../MyLibrary/Light.h"
 #include "../MyLibrary/Observer.h"
 #include "Stage/Stage.h"
-#include "Stage/SelectedObject.h"
 #include "User/User.h"
 #include "Collision.h"
 
@@ -38,7 +37,7 @@ void ToolMaster::Update()
 
 	// ’†g
 	ImGuiInput();
-
+	//SelectedObject::Update();
 
 
 	// ÅŒã
@@ -87,7 +86,10 @@ void ToolMaster::CheckSetPosition(Object3D* obj, float* velocityY, float distanc
 
 void ToolMaster::SelectObject()
 {
-	SelectedObject::SetSelecObject();
+	//// ˆê•Ï”‚ÉŠi”[‚µ‚ÄƒAƒhƒŒƒX‚ğ“n‚·
+	//auto&& obj = Collision::GetSelectObject();
+	//SelectedObject::SetSelecObject(&obj);
+	Collision::SetSelectObject();
 }
 
 void ToolMaster::ImGuiInput()
@@ -104,7 +106,7 @@ void ToolMaster::ImGuiInput()
 	ImGui::Text("Select Object");
 	if (ImGui::Button("Deselect"))
 	{
-		SelectedObject::DeselectObject();
+		Collision::DeselectObject();
 	}
 
 	ImGui::End();

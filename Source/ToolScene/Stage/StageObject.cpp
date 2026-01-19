@@ -1,6 +1,7 @@
 #include "StageObject.h"
 #include <assert.h>
 #include "../Collision.h"
+#include "../../../ImGui/imgui.h"
 
 StageObject::StageObject(int objectNumber, const std::string& fileName, const Transform& t, int hp, int score)
 {
@@ -18,6 +19,7 @@ StageObject::StageObject(int objectNumber, const std::string& fileName, const Tr
 	hp_ = hp;
 	objectNumber_ = objectNumber;
 	score_ = score;
+	isSelect_ = false;
 
 	if (hp_ <= 0)
 	{
@@ -52,6 +54,23 @@ void StageObject::Update()
 		return;
 	}
 
-	// この下でエフェクトをいじる
+	if (isSelect_ == false)
+	{
+		return;
+	}
 
+	// この下でエフェクトをいじる
+	ImGui::Begin("SelectdObject");
+	float p[3] = { transform_.position_.x, transform_.position_.y, transform_.position_.z };
+	//ImGui::InputFloat3("position", &p[3], "%.3f");
+	ImGui::Text("position");
+	ImGui::InputFloat("x:", &transform_.position_.x);
+	ImGui::InputFloat("y:", &transform_.position_.y);
+	ImGui::InputFloat("z:", &transform_.position_.z);
+	ImGui::End();
+
+
+	transform_.MakeLocalMatrix();
+	MV1SetMatrix(hModel_, transform_.GetLocalMatrix());
+	MV1RefreshCollInfo(hModel_);
 }

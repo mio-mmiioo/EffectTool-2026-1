@@ -9,5 +9,6 @@ namespace Collision
 	void AttackedObject(int attackPower);
 	void SetOnGround(Object3D* obj, float* velocity, const float gravity); // ‘«Œ³‚Ì“–‚½‚è”»’èŒãAˆÊ’u‚ğC³‚·‚é
 	void CheckPush(Object3D* obj, VECTOR3 pos1, VECTOR3 pos2, float minDistance);
-	void SetSelectObject(Object3D* obj);
+	void SetSelectObject();
+	void DeselectObject();
 }
