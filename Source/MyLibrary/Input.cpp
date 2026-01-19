@@ -39,7 +39,8 @@ void Input::InitActionMap()
     inputActionMap["moveBack"] = { {InputType::keyboard, KEY_INPUT_S} };    // Œã‘Ş
 
     inputActionMap["outBullet"] = { {InputType::mouse, MOUSE_INPUT_LEFT} }; // ”­–C
-    inputActionMap["selectObject"] = { {InputType::mouse, MOUSE_INPUT_RIGHT} }; // ‘I‘ğ
+    inputActionMap["selectObject"] = { {InputType::keyboard, KEY_INPUT_J}, { InputType::mouse, MOUSE_INPUT_RIGHT } }; // ‘I‘ğ
+    inputActionMap["deselectObject"] = { {InputType::keyboard, KEY_INPUT_K} }; // ‘I‘ğ‰ğœ
 }
 
 void Input::StateUpdate()

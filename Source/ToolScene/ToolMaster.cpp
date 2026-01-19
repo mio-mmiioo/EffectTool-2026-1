@@ -37,7 +37,6 @@ void ToolMaster::Update()
 
 	// 中身
 	ImGuiInput();
-	//SelectedObject::Update();
 
 
 	// 最後
@@ -84,14 +83,6 @@ void ToolMaster::CheckSetPosition(Object3D* obj, float* velocityY, float distanc
 	Collision::SetOnGround(obj, velocityY, gravity); // ステージの位置を確認し、空中に浮いていないか確認する 浮いていたら重力をかける
 }
 
-void ToolMaster::SelectObject()
-{
-	//// 一時変数に格納してアドレスを渡す
-	//auto&& obj = Collision::GetSelectObject();
-	//SelectedObject::SetSelecObject(&obj);
-	Collision::SetSelectObject();
-}
-
 void ToolMaster::ImGuiInput()
 {
 	VECTOR3 p = Observer::GetHitPosition();
@@ -101,13 +92,6 @@ void ToolMaster::ImGuiInput()
 	ImGui::Text("Attack Power : %d", Observer::GetAttackPower());
 	ImGui::Text("hitPosition   : (%04f, %04f, %04f)", p.x, p.y, p.z);
 	ImGui::Text("PowerDirection: (%04f, %04f, %04f)", d.x, d.y, d.z);
-	
-	// 選択されたオブジェクトの情報
-	ImGui::Text("Select Object");
-	if (ImGui::Button("Deselect"))
-	{
-		Collision::DeselectObject();
-	}
 
 	ImGui::End();
 }

@@ -71,7 +71,11 @@ void User::Update()
 	{
 		if (Input::IsKeyDown("selectObject"))
 		{
-			ToolMaster::SelectObject();
+			Collision::SetSelectObject(); // ‘I‘ğ
+		}
+		if (Input::IsKeyDown("deselectObject"))
+		{
+			Collision::DeselectObject(); // ‘I‘ğ‰ğœ
 		}
 	}
 

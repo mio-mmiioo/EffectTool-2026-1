@@ -18,6 +18,7 @@ StageObject::StageObject(int objectNumber, const std::string& fileName, const Tr
 	assert(hitModel_ > 0);
 
 	transform_ = t;
+	origin_ = t;
 	transform_.MakeLocalMatrix();
 	MV1SetMatrix(hitModel_, transform_.GetLocalMatrix());
 	MV1SetupCollInfo(hitModel_);
@@ -37,6 +38,7 @@ StageObject::StageObject(int objectNumber, const std::string& fileName, const Tr
 	}
 
 	Collision::AddObject(this);
+	Effect::Init();
 
 	// ツールとして必要なものの初期化
 	isGravity_ = false;
@@ -70,7 +72,8 @@ void StageObject::Update()
 	}
 
 	ImGuiInput();
-	// この下でエフェクトをいじる
+
+	Effect::Update(&transform_); // ここでエフェクトをいじる
 	
 	if (isGravity_ == true)
 	{
@@ -103,6 +106,11 @@ void StageObject::ImGuiInput()
 		ImGui::InputFloat("scale x:", &transform_.scale_.x);
 		ImGui::InputFloat("scale y:", &transform_.scale_.y);
 		ImGui::InputFloat("scale z:", &transform_.scale_.z);
+
+		if (ImGui::Button("Reset Transform"))
+		{
+			transform_ = origin_;
+		}
 	}
 
 	ImGui::Checkbox("gravity", &isGravity_);

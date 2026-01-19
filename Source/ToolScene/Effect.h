@@ -3,7 +3,8 @@
 
 namespace Effect
 {
-	void Update();
+	void Init();
+	void Update(Transform* t);
 	void Scaling(Transform* t);
 	void ImGuiInput();
 }

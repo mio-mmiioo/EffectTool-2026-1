@@ -10,5 +10,4 @@ namespace ToolMaster
 
 	bool IsBulletHit(VECTOR3 startPosition, VECTOR3 endPosition);
 	void CheckSetPosition(Object3D* obj, float* velocityY, float distanceR, float gravity);
-	void SelectObject();
 }
