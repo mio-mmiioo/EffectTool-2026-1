@@ -80,7 +80,8 @@ void ToolMaster::CheckSetPosition(Object3D* obj, float* velocityY, float distanc
 	VECTOR3 back = t.position_ + VECTOR3(0, 0, 1) * -CHECK_BACK_LENGTH * MGetRotY(t.rotation_.y);
 	Collision::CheckPush(obj, t.position_, front, distanceR); // ステージへのめり込みを確認する(前方)
 	Collision::CheckPush(obj, t.position_, back, distanceR);  // ステージへのめり込みを確認する(後方)
-	Collision::SetOnGround(obj, velocityY, gravity); // ステージの位置を確認し、空中に浮いていないか確認する 浮いていたら重力をかける
+	Collision::AddVelocity(obj, velocityY, gravity); // 重力を加える
+	Collision::SetOnGround(obj); // ステージの位置を確認し、空中に浮いていないか確認する
 }
 
 void ToolMaster::ImGuiInput()

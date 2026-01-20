@@ -73,11 +73,15 @@ void StageObject::Update()
 
 	ImGuiInput();
 
-	Effect::Update(&transform_); // ここでエフェクトをいじる
+	Effect::Update(this); // ここでエフェクトをいじる
 	
 	if (isGravity_ == true)
 	{
-		Collision::SetOnGround(this, &velocityY_, STAGE_OBJECT::GRAVITY);
+		Collision::AddVelocity(this, &velocityY_, STAGE_OBJECT::GRAVITY);
+		if (Collision::SetOnGround(this) == true)
+		{
+			velocityY_ = 0.0f;
+		}
 	}
 
 

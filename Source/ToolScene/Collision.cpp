@@ -76,38 +76,46 @@ void Collision::AttackedObject(int attackPower)
 	}
 }
 
-void Collision::SetOnGround(Object3D* obj, float* velocityY, const float gravity)
+void Collision::AddVelocity(Object3D* obj, float* velocityY, const float gravity)
 {
-	VECTOR3 hit;
 	VECTOR3 p = obj->GetTransform().position_;
-
 	// d—Í‚ð‰Á‚¦‚é
 	p.y -= *velocityY;
 	*velocityY += gravity;
 	obj->SetPosition(p);
+}
+
+bool Collision::SetOnGround(Object3D* obj)
+{
+	bool ret = false;
+	VECTOR3 hit;
+	VECTOR3 p = obj->GetTransform().position_;
+
+	// d—Í‚ð‰Á‚¦‚é
+	//p.y -= *velocityY;
+	//*velocityY += gravity;
+	//obj->SetPosition(p);
 
 	VECTOR3 pos1 = p + CHECK_ONGROUND_LENGTH;
 	VECTOR3 pos2 = p - CHECK_ONGROUND_LENGTH;
 
 	for (Object3D* o : allObjectList)
 	{
-		if (obj == o)
+		if (obj != o)
 		{
-			return;
-		}
-
-		if (o->CollideLine(pos1, pos2, &hit))
-		{
-			if (p.y < hit.y)
+			if (o->CollideLine(pos1, pos2, &hit))
 			{
-				// ‚ß‚èž‚ñ‚Å‚é
-				VECTOR3 ret = p - VECTOR3(0.0f, p.y - hit.y, 0.0f);
-				obj->SetPosition(ret);
-				*velocityY = 0.0f;
-				return;
+				if (p.y < hit.y)
+				{
+					// ‚ß‚èž‚ñ‚Å‚é
+					VECTOR3 pos = p - VECTOR3(0.0f, p.y - hit.y, 0.0f);
+					obj->SetPosition(pos);
+					ret = true;
+				}
 			}
 		}
 	}
+	return ret;
 }
 
 void Collision::CheckPush(Object3D* obj, VECTOR3 pos1, VECTOR3 pos2, float minDistance)
