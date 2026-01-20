@@ -8,7 +8,8 @@ namespace Effect
 	enum EFFECT_STATE
 	{
 		ES_SCALING,
-		ES_BOUND,
+		ES_BOUND1,
+		ES_BOUND2,
 		MAX_EFFECT_STATE
 	};
 
@@ -27,7 +28,8 @@ namespace Effect
 	float velocityY; // 
 	float elasticity; // 反発係数
 
-	float timer;
+	float timer; // 各エフェクトにかかる時間を代入するための変数
+
 }
 
 void Effect::Init()
@@ -36,7 +38,8 @@ void Effect::Init()
 	// 各エフェクトにかかる時間の代入
 	{
 		eTime[ES_SCALING] = 0.5f;
-		eTime[ES_BOUND] = 4.0f;
+		eTime[ES_BOUND1] = 4.0f;
+		eTime[ES_BOUND2] = 10.0f;
 	}
 
 	state = EFFECT_STATE::ES_SCALING;
@@ -70,34 +73,38 @@ void Effect::Update(Object3D* obj)
 		}
 	}
 
-	Transform t = obj->GetTransform();
-
 	switch (state)
 	{
 	case EFFECT_STATE::ES_SCALING:
-		Scaling(&t);
+		Scaling(obj);
 		break;
-	case EFFECT_STATE::ES_BOUND:
-		Bound(obj);
+	case EFFECT_STATE::ES_BOUND1:
+		Bound1(obj);
+		break;
+	case EFFECT_STATE::ES_BOUND2:
+		Bound2(obj);
+		break;
 	}
 
 	timer -= Time::DeltaTime();
 }
 
-void Effect::Scaling(Transform* t)
+void Effect::Scaling(Object3D* obj)
 {
+	Transform t = obj->GetTransform();
 	if (timer == eTime[ES_SCALING])
 	{
-		t->scale_ = t->scale_ * 0.7f;
+		t.scale_ = t.scale_ * 0.7f;
 	}
 
 	if (timer > 0.0f)
 	{
-		t->scale_ = t->scale_ * 1.01f;
+		t.scale_ = t.scale_ * 1.01f;
 	}
+	obj->SetTransform(t);
 }
 
-void Effect::Bound(Object3D* obj)
+void Effect::Bound1(Object3D* obj)
 {
 	Collision::AddVelocity(obj, &velocityY, gravity);
 	if (Collision::SetOnGround(obj) == true)
@@ -106,10 +113,25 @@ void Effect::Bound(Object3D* obj)
 	}
 }
 
+void Effect::Bound2(Object3D* obj)
+{
+	Collision::AddVelocity(obj, &velocityY, gravity);
+	if (Collision::SetOnGround(obj) == true)
+	{
+		velocityY = -elasticity * velocityY;
+		elasticity -= 0.1f;
+		if (elasticity < 0.0f)
+		{
+			elasticity = 0.0f;
+		}
+	}
+}
+
 void Effect::ImGuiInput()
 {
 	prevEffectState = effectState;
 
+	ImGui::Text("effect timer : %f", timer);
 	ImGui::Checkbox("Repeat", &isRepeat);
 	if (ImGui::Button("Start Effect") == true && timer <= 0.0f)
 	{
@@ -121,16 +143,23 @@ void Effect::ImGuiInput()
 
 	ImGui::RadioButton("No Effect", &effectState, EFFECT_STATE::MAX_EFFECT_STATE);
 	ImGui::RadioButton("Scaling", &effectState, EFFECT_STATE::ES_SCALING);
-	ImGui::RadioButton("Bound", &effectState, EFFECT_STATE::ES_BOUND);
-
+	ImGui::RadioButton("Bound1", &effectState, EFFECT_STATE::ES_BOUND1);
+	ImGui::RadioButton("Bound2", &effectState, EFFECT_STATE::ES_BOUND2);
 
 	switch (effectState)
 	{
 	case EFFECT_STATE::ES_SCALING:
 		state = EFFECT_STATE::ES_SCALING;
 		break;
-	case EFFECT_STATE::ES_BOUND:
-		state = EFFECT_STATE::ES_BOUND;
+	case EFFECT_STATE::ES_BOUND1:
+		state = EFFECT_STATE::ES_BOUND1;
+		break;
+	case EFFECT_STATE::ES_BOUND2:
+		state = EFFECT_STATE::ES_BOUND2;
+		ImGui::Begin("Bound2");
+		ImGui::InputFloat("velocity", &velocityY);
+		ImGui::InputFloat("elasticity", &elasticity);
+		ImGui::End();
 		break;
 	case EFFECT_STATE::MAX_EFFECT_STATE:
 		state = EFFECT_STATE::MAX_EFFECT_STATE;

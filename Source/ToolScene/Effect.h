@@ -5,7 +5,8 @@ namespace Effect
 {
 	void Init();
 	void Update(Object3D* obj);
-	void Scaling(Transform* t);
-	void Bound(Object3D* obj);
+	void Scaling(Object3D* obj);
+	void Bound1(Object3D* obj);
+	void Bound2(Object3D* obj);
 	void ImGuiInput();
 }
