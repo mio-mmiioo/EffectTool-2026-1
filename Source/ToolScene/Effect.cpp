@@ -1,15 +1,18 @@
 #include "Effect.h"
 #include <map>
 #include "../../ImGui/imgui.h"
+#include "../MyLibrary/Observer.h"
 #include "Collision.h"
 
 namespace Effect
 {
 	enum EFFECT_STATE
 	{
+		ES_CREATING,
 		ES_SCALING,
 		ES_BOUND1,
 		ES_BOUND2,
+		ES_ATTACKED,
 		MAX_EFFECT_STATE
 	};
 
@@ -28,6 +31,11 @@ namespace Effect
 	float velocityY; // 
 	float elasticity; // 反発係数
 
+	// Attack関連
+	float attackPower; // 攻撃力、今回の計算では質量とみる
+	float speed; // 銃弾の飛ぶ速さ
+	float energy; // 運動エネルギー
+
 	float timer; // 各エフェクトにかかる時間を代入するための変数
 
 }
@@ -40,6 +48,7 @@ void Effect::Init()
 		eTime[ES_SCALING] = 0.5f;
 		eTime[ES_BOUND1] = 4.0f;
 		eTime[ES_BOUND2] = 10.0f;
+		eTime[ES_ATTACKED] = 10.0f;
 	}
 
 	state = EFFECT_STATE::ES_SCALING;
@@ -49,6 +58,10 @@ void Effect::Init()
 	gravity = 0.05f;
 	velocityY = 0.0f;
 	elasticity = 1.0f;
+
+	attackPower = 2; // kg
+	speed = 340; // m/s
+	energy = (attackPower * speed * speed) / 2.0f;
 }
 
 void Effect::Update(Object3D* obj)
@@ -84,9 +97,17 @@ void Effect::Update(Object3D* obj)
 	case EFFECT_STATE::ES_BOUND2:
 		Bound2(obj);
 		break;
+	case EFFECT_STATE::ES_ATTACKED:
+		Attacked(obj);
+		break;
 	}
 
 	timer -= Time::DeltaTime();
+}
+
+void Effect::Creating(Object3D* obj)
+{
+	// 今回作成中の効果
 }
 
 void Effect::Scaling(Object3D* obj)
@@ -127,6 +148,17 @@ void Effect::Bound2(Object3D* obj)
 	}
 }
 
+void Effect::Attacked(Object3D* obj)
+{
+	VECTOR3 p = Observer::GetHitPosition();
+	VECTOR3 d = Observer::GetPowerDirection();
+
+	// オブジェクトの位置と銃弾がヒットする位置
+	// この2点の距離をもとに
+	energy = (attackPower * speed * speed) / 2.0f; // 運動エネルギー
+
+}
+
 void Effect::ImGuiInput()
 {
 	prevEffectState = effectState;
@@ -137,17 +169,29 @@ void Effect::ImGuiInput()
 	{
 		isStartEffect = true;
 		timer = eTime[state];
+		elasticity = 1.0f;
 	}
 
-	//ImGui::SliderFloat("timer", &timer, 0.0f, eTime[state]);
-
+	// ラジオボタンによる選択
 	ImGui::RadioButton("No Effect", &effectState, EFFECT_STATE::MAX_EFFECT_STATE);
+	ImGui::RadioButton("Creating", &effectState, EFFECT_STATE::ES_CREATING);
 	ImGui::RadioButton("Scaling", &effectState, EFFECT_STATE::ES_SCALING);
 	ImGui::RadioButton("Bound1", &effectState, EFFECT_STATE::ES_BOUND1);
 	ImGui::RadioButton("Bound2", &effectState, EFFECT_STATE::ES_BOUND2);
+	ImGui::RadioButton("Attackd", &effectState, EFFECT_STATE::ES_ATTACKED);
+
+
+	VECTOR3 p = Observer::GetHitPosition();
+	VECTOR3 d = Observer::GetPowerDirection();
+	attackPower = Observer::GetAttackPower();
 
 	switch (effectState)
 	{
+	case EFFECT_STATE::ES_CREATING:
+		state = EFFECT_STATE::ES_CREATING;
+		ImGui::Begin("Creating");
+		ImGui::End();
+		break;
 	case EFFECT_STATE::ES_SCALING:
 		state = EFFECT_STATE::ES_SCALING;
 		break;
@@ -159,6 +203,15 @@ void Effect::ImGuiInput()
 		ImGui::Begin("Bound2");
 		ImGui::InputFloat("velocity", &velocityY);
 		ImGui::InputFloat("elasticity", &elasticity);
+		ImGui::End();
+		break;
+	case EFFECT_STATE::ES_ATTACKED:
+		state = EFFECT_STATE::ES_ATTACKED;
+		ImGui::Begin("Attack");
+		ImGui::InputFloat("Attack Power", &attackPower);
+		ImGui::Text("energy : %f", energy);
+		ImGui::Text("hitPosition   : (%04f, %04f, %04f)", p.x, p.y, p.z);
+		ImGui::Text("PowerDirection: (%04f, %04f, %04f)", d.x, d.y, d.z);
 		ImGui::End();
 		break;
 	case EFFECT_STATE::MAX_EFFECT_STATE:

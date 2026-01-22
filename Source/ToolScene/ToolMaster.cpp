@@ -86,13 +86,13 @@ void ToolMaster::CheckSetPosition(Object3D* obj, float* velocityY, float distanc
 
 void ToolMaster::ImGuiInput()
 {
-	VECTOR3 p = Observer::GetHitPosition();
-	VECTOR3 d = Observer::GetPowerDirection();
+	//VECTOR3 p = Observer::GetHitPosition();
+	//VECTOR3 d = Observer::GetPowerDirection();
 
-	ImGui::Begin("ToolMaster");
-	ImGui::Text("Attack Power : %d", Observer::GetAttackPower());
-	ImGui::Text("hitPosition   : (%04f, %04f, %04f)", p.x, p.y, p.z);
-	ImGui::Text("PowerDirection: (%04f, %04f, %04f)", d.x, d.y, d.z);
+	//ImGui::Begin("ToolMaster");
+	//ImGui::Text("Attack Power : %d", Observer::GetAttackPower());
+	//ImGui::Text("hitPosition   : (%04f, %04f, %04f)", p.x, p.y, p.z);
+	//ImGui::Text("PowerDirection: (%04f, %04f, %04f)", d.x, d.y, d.z);
 
-	ImGui::End();
+	//ImGui::End();
 }
