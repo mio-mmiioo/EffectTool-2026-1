@@ -10,8 +10,10 @@ namespace Effect
 	{
 		ES_CREATING,
 		ES_SCALING,
-		ES_BOUND1,
-		ES_BOUND2,
+		ES_ROTATING1,
+		ES_BOUND1,		// 反発係数が1
+		ES_BOUND2,		// 反発係数が徐々に減っていく
+		ES_BOUND3,		// 地面にあるボールに上から力を加えた感じの運動
 		ES_ATTACKED,
 		MAX_EFFECT_STATE
 	};
@@ -30,6 +32,8 @@ namespace Effect
 	float gravity; // 重力
 	float velocityY; // 
 	float elasticity; // 反発係数
+	float v0; // 初速度
+	float isBounded; // 一回しかバウンドのエフェクトをしたくないときに使用
 
 	// Attack関連
 	float attackPower; // 攻撃力、今回の計算では質量とみる
@@ -46,8 +50,10 @@ void Effect::Init()
 	// 各エフェクトにかかる時間の代入
 	{
 		eTime[ES_SCALING] = 0.5f;
+		eTime[ES_ROTATING1] = 100.0f;
 		eTime[ES_BOUND1] = 4.0f;
 		eTime[ES_BOUND2] = 10.0f;
+		eTime[ES_BOUND3] = 20.0f;
 		eTime[ES_ATTACKED] = 10.0f;
 	}
 
@@ -58,6 +64,8 @@ void Effect::Init()
 	gravity = 0.05f;
 	velocityY = 0.0f;
 	elasticity = 1.0f;
+	v0 = 5.0f;
+	isBounded = false;
 
 	attackPower = 2; // kg
 	speed = 340; // m/s
@@ -91,11 +99,17 @@ void Effect::Update(Object3D* obj)
 	case EFFECT_STATE::ES_SCALING:
 		Scaling(obj);
 		break;
+	case EFFECT_STATE::ES_ROTATING1:
+		Rotating1(obj);
+		break;
 	case EFFECT_STATE::ES_BOUND1:
 		Bound1(obj);
 		break;
 	case EFFECT_STATE::ES_BOUND2:
 		Bound2(obj);
+		break;
+	case EFFECT_STATE::ES_BOUND3:
+		Bound3(obj);
 		break;
 	case EFFECT_STATE::ES_ATTACKED:
 		Attacked(obj);
@@ -125,6 +139,13 @@ void Effect::Scaling(Object3D* obj)
 	obj->SetTransform(t);
 }
 
+void Effect::Rotating1(Object3D* obj)
+{
+	Transform t = obj->GetTransform();
+	t.rotation_.y += 0.05f;
+	obj->SetTransform(t);
+}
+
 void Effect::Bound1(Object3D* obj)
 {
 	Collision::AddVelocity(obj, &velocityY, gravity);
@@ -148,9 +169,42 @@ void Effect::Bound2(Object3D* obj)
 	}
 }
 
+void Effect::Bound3(Object3D* obj)
+{
+	Collision::AddVelocity(obj, &velocityY, gravity);
+	if (Collision::SetOnGround(obj) == true)
+	{
+		if (isBounded == false)
+		{
+			velocityY = v0;
+			isBounded = true;
+		}
+		else
+		{
+			velocityY = -elasticity * velocityY;
+			elasticity -= 0.1f;
+			if (elasticity < 0.0f)
+			{
+				elasticity = 0.0f;
+			}
+		}
+	}
+	if (velocityY < -0.3f && velocityY > 0.3f)
+	{
+		Rotating1(obj);
+	}
+
+	if (elasticity == 0.0f && timer <= 0.0f)
+	{
+		isBounded = false;
+	}
+
+}
+
 void Effect::Attacked(Object3D* obj)
 {
-	VECTOR3 p = Observer::GetHitPosition();
+	Transform t = obj->GetTransform();
+	VECTOR3 h = Observer::GetHitPosition();
 	VECTOR3 d = Observer::GetPowerDirection();
 
 	// オブジェクトの位置と銃弾がヒットする位置
@@ -175,9 +229,11 @@ void Effect::ImGuiInput()
 	// ラジオボタンによる選択
 	ImGui::RadioButton("No Effect", &effectState, EFFECT_STATE::MAX_EFFECT_STATE);
 	ImGui::RadioButton("Creating", &effectState, EFFECT_STATE::ES_CREATING);
+	ImGui::RadioButton("Rotating1", &effectState, EFFECT_STATE::ES_ROTATING1);
 	ImGui::RadioButton("Scaling", &effectState, EFFECT_STATE::ES_SCALING);
 	ImGui::RadioButton("Bound1", &effectState, EFFECT_STATE::ES_BOUND1);
 	ImGui::RadioButton("Bound2", &effectState, EFFECT_STATE::ES_BOUND2);
+	ImGui::RadioButton("Bound3", &effectState, EFFECT_STATE::ES_BOUND3);
 	ImGui::RadioButton("Attackd", &effectState, EFFECT_STATE::ES_ATTACKED);
 
 
@@ -195,12 +251,23 @@ void Effect::ImGuiInput()
 	case EFFECT_STATE::ES_SCALING:
 		state = EFFECT_STATE::ES_SCALING;
 		break;
+	case EFFECT_STATE::ES_ROTATING1:
+		state = EFFECT_STATE::ES_ROTATING1;
+		break;
 	case EFFECT_STATE::ES_BOUND1:
 		state = EFFECT_STATE::ES_BOUND1;
 		break;
 	case EFFECT_STATE::ES_BOUND2:
 		state = EFFECT_STATE::ES_BOUND2;
 		ImGui::Begin("Bound2");
+		ImGui::InputFloat("velocity", &velocityY);
+		ImGui::InputFloat("elasticity", &elasticity);
+		ImGui::End();
+		break;
+	case EFFECT_STATE::ES_BOUND3:
+		state = EFFECT_STATE::ES_BOUND3;
+		ImGui::Begin("Bound3");
+		ImGui::InputFloat("v0", &v0);
 		ImGui::InputFloat("velocity", &velocityY);
 		ImGui::InputFloat("elasticity", &elasticity);
 		ImGui::End();
