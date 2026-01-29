@@ -39,6 +39,7 @@ namespace Effect
 	float attackPower; // 攻撃力、今回の計算では質量とみる
 	float speed; // 銃弾の飛ぶ速さ
 	float energy; // 運動エネルギー
+	float quality; // 質量
 
 	float timer; // 各エフェクトにかかる時間を代入するための変数
 
@@ -68,8 +69,9 @@ void Effect::Init()
 	isBounded = false;
 
 	attackPower = 2; // kg
-	speed = 340; // m/s
+	speed = 340; // km/s
 	energy = (attackPower * speed * speed) / 2.0f;
+	quality = 100.0f;
 }
 
 void Effect::Update(Object3D* obj)
@@ -122,6 +124,7 @@ void Effect::Update(Object3D* obj)
 void Effect::Creating(Object3D* obj)
 {
 	// 今回作成中の効果
+
 }
 
 void Effect::Scaling(Object3D* obj)
@@ -206,10 +209,41 @@ void Effect::Attacked(Object3D* obj)
 	Transform t = obj->GetTransform();
 	VECTOR3 h = Observer::GetHitPosition();
 	VECTOR3 d = Observer::GetPowerDirection();
+	energy = (attackPower * speed * speed) / 2.0f; // 運動エネルギー
+	
+	// (質量) * (加速度) = (力)
+	Collision::AddVelocity(obj, &velocityY, gravity);
+	if (Collision::SetOnGround(obj) == true)
+	{
+		if (isBounded == false)
+		{
+			velocityY = energy / quality;
+			isBounded = true;
+		}
+		else
+		{
+			velocityY = -elasticity * velocityY;
+			elasticity -= 0.1f;
+			if (elasticity < 0.0f)
+			{
+				elasticity = 0.0f;
+			}
+		}
+	}
+	//if (velocityY < -0.3f && velocityY > 0.3f)
+	//{
+	//	Rotating1(obj);
+	//}
+
+	if (elasticity == 0.0f && timer <= 0.0f)
+	{
+		isBounded = false;
+	}
+
 
 	// オブジェクトの位置と銃弾がヒットする位置
 	// この2点の距離をもとに
-	energy = (attackPower * speed * speed) / 2.0f; // 運動エネルギー
+	
 
 }
 
@@ -276,6 +310,7 @@ void Effect::ImGuiInput()
 		state = EFFECT_STATE::ES_ATTACKED;
 		ImGui::Begin("Attack");
 		ImGui::InputFloat("Attack Power", &attackPower);
+		ImGui::InputFloat("m", &quality);
 		ImGui::Text("energy : %f", energy);
 		ImGui::Text("hitPosition   : (%04f, %04f, %04f)", p.x, p.y, p.z);
 		ImGui::Text("PowerDirection: (%04f, %04f, %04f)", d.x, d.y, d.z);
