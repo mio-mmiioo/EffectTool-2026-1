@@ -37,6 +37,7 @@ void Input::InitActionMap()
     inputActionMap["rotateLeft"] = { {InputType::keyboard, KEY_INPUT_A} };  // 左回転
     inputActionMap["moveFront"] = { {InputType::keyboard, KEY_INPUT_W} };   // 前進
     inputActionMap["moveBack"] = { {InputType::keyboard, KEY_INPUT_S} };    // 後退
+    inputActionMap["startEffect"] = { {InputType::keyboard, KEY_INPUT_L} }; // effectが開始するボタン
 
     inputActionMap["outBullet"] = { {InputType::mouse, MOUSE_INPUT_LEFT} }; // 発砲
     inputActionMap["selectObject"] = { {InputType::keyboard, KEY_INPUT_J}, { InputType::mouse, MOUSE_INPUT_RIGHT } }; // 選択

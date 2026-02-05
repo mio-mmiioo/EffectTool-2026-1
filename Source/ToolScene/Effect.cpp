@@ -3,6 +3,7 @@
 #include "../../ImGui/imgui.h"
 #include "../MyLibrary/Observer.h"
 #include "Collision.h"
+#include "../MyLibrary/Input.h"
 
 namespace Effect
 {
@@ -55,7 +56,7 @@ void Effect::Init()
 		eTime[ES_BOUND1] = 4.0f;
 		eTime[ES_BOUND2] = 10.0f;
 		eTime[ES_BOUND3] = 20.0f;
-		eTime[ES_ATTACKED] = 10.0f;
+		eTime[ES_ATTACKED] = 50.0f;
 	}
 
 	state = EFFECT_STATE::ES_SCALING;
@@ -69,8 +70,8 @@ void Effect::Init()
 	isBounded = false;
 
 	attackPower = 2; // kg
-	speed = 340; // km/s
-	energy = (attackPower * speed * speed) / 2.0f;
+	speed = 0.340; // km/s
+	energy = -(attackPower * speed * speed) / 2.0f;
 	quality = 100.0f;
 }
 
@@ -217,7 +218,7 @@ void Effect::Attacked(Object3D* obj)
 	{
 		if (isBounded == false)
 		{
-			velocityY = energy / quality;
+			velocityY += attackPower;
 			isBounded = true;
 		}
 		else
@@ -243,7 +244,6 @@ void Effect::Attacked(Object3D* obj)
 
 	// オブジェクトの位置と銃弾がヒットする位置
 	// この2点の距離をもとに
-	
 
 }
 
@@ -253,7 +253,7 @@ void Effect::ImGuiInput()
 
 	ImGui::Text("effect timer : %f", timer);
 	ImGui::Checkbox("Repeat", &isRepeat);
-	if (ImGui::Button("Start Effect") == true && timer <= 0.0f)
+	if ((ImGui::Button("Start Effect") == true || Input::IsKeyDown("startEffect")) && timer <= 0.0f)
 	{
 		isStartEffect = true;
 		timer = eTime[state];
@@ -309,8 +309,22 @@ void Effect::ImGuiInput()
 	case EFFECT_STATE::ES_ATTACKED:
 		state = EFFECT_STATE::ES_ATTACKED;
 		ImGui::Begin("Attack");
+		ImGui::InputFloat("velocity", &velocityY);
+		ImGui::InputFloat("elasticity", &elasticity);
 		ImGui::InputFloat("Attack Power", &attackPower);
 		ImGui::InputFloat("m", &quality);
+		if (ImGui::Button("AddVelocity") == true)
+		{
+			if (velocityY >= 0)
+			{
+				velocityY += -velocityY + attackPower;
+			}
+			else
+			{
+				velocityY += attackPower;
+			}
+			elasticity = 1.0f;
+		}
 		ImGui::Text("energy : %f", energy);
 		ImGui::Text("hitPosition   : (%04f, %04f, %04f)", p.x, p.y, p.z);
 		ImGui::Text("PowerDirection: (%04f, %04f, %04f)", d.x, d.y, d.z);
