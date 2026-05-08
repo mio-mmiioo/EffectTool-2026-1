@@ -1,5 +1,6 @@
 #pragma once
 #include "../../Library/GameObject.h"
+#include "../../Source/MyLibrary/Collider.h"
 
 static VECTOR3 LOOK_HEIGHT = { 0.0f, 180.0f, 0.0f }; // éãì_ÇÃçÇÇ≥
 

@@ -86,6 +86,9 @@
     <ClCompile Include="Source\ToolScene\Effect.cpp">
       <Filter>ToolScene</Filter>
     </ClCompile>
+    <ClCompile Include="Source\MyLibrary\Collider.cpp">
+      <Filter>MyLibrary</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Screen.h" />
@@ -188,6 +191,9 @@
     </ClInclude>
     <ClInclude Include="Source\ToolScene\Effect.h">
       <Filter>ToolScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\MyLibrary\Collider.h">
+      <Filter>MyLibrary</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

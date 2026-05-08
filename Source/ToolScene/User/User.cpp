@@ -17,8 +17,15 @@ namespace USER
 	const VECTOR3 CAPSULE_POS2 = { 0.0f, 150.0f, 0.0f };
 	const float DISTANCE_R = 100.0f;
 
+	// ìñÇΩÇËîªíË
+	VECTOR3 AABB_MIN = { -50.0f, 0.0f, -50.0f };
+	VECTOR3 AABB_MAX = { 50.0f, 200.0f, 50.0f };
+
+
 	// äJî≠éûÇÃÇ›
 	const float DIRECTION_LENGTH = 100.0f; // å¸Ç¢ÇƒÇ¢ÇÈï˚å¸
+
+
 }
 
 User::User(const VECTOR3& position)
@@ -47,6 +54,8 @@ User::User(const VECTOR3& position)
 
 	camera_ = new Camera();
 	Gun::Init();
+
+	collider_ = new Collider(USER::AABB_MIN, USER::AABB_MAX);
 
 	SetDrawOrder(-100);
 }
@@ -105,6 +114,42 @@ void User::Update()
 		}
 	}
 
+	// ìñÇΩÇËîªíË
+	{
+		VECTOR3* pushBack = nullptr;
+		if (collider_->CheckOnGround(pushBack) == true)
+		{
+			int a = 0;
+		}
+	}
+
+	ToolMaster::CheckSetPosition(this, &velocityY_, distanceR_, gravity_);
+
+	camera_->SetUserPosition(transform_);
+
+	transform_.MakeLocalMatrix();
+	MV1SetMatrix(hModel_, transform_.GetLocalMatrix());
+	MV1RefreshCollInfo(hModel_);
+}
+
+void User::Draw()
+{
+	Object3D::Draw();
+	// è∆èÄÇÃï`âÊ
+	if (isHit_ == true)
+	{
+		DrawGraph(mouseX_ - hitAiming_.halfWidth, mouseY_ - hitAiming_.halfHeight, hitAiming_.hImage, TRUE); // ActorÇ…ìñÇΩÇÈ
+	}
+	else
+	{
+		DrawGraph(mouseX_ - aiming_.halfWidth, mouseY_ - aiming_.halfHeight, aiming_.hImage, TRUE); // ïWèÄ
+	}
+
+	
+}
+
+void User::ImGuiInput()
+{
 	// ì¸óÕâÒì]
 	{
 		if (Input::IsKeyKeepDown("rotateRight"))
@@ -132,31 +177,6 @@ void User::Update()
 		}
 	}
 
-	ToolMaster::CheckSetPosition(this, &velocityY_, distanceR_, gravity_);
-
-	camera_->SetUserPosition(transform_);
-
-	transform_.MakeLocalMatrix();
-	MV1SetMatrix(hModel_, transform_.GetLocalMatrix());
-	MV1RefreshCollInfo(hModel_);
-}
-
-void User::Draw()
-{
-	Object3D::Draw();
-	// è∆èÄÇÃï`âÊ
-	if (isHit_ == true)
-	{
-		DrawGraph(mouseX_ - hitAiming_.halfWidth, mouseY_ - hitAiming_.halfHeight, hitAiming_.hImage, TRUE); // ActorÇ…ìñÇΩÇÈ
-	}
-	else
-	{
-		DrawGraph(mouseX_ - aiming_.halfWidth, mouseY_ - aiming_.halfHeight, aiming_.hImage, TRUE); // ïWèÄ
-	}
-}
-
-void User::ImGuiInput()
-{
 	Transform t = transform_;
 
 	ImGui::Begin("User");

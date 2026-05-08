@@ -7,6 +7,9 @@
 namespace STAGE_OBJECT
 {
 	const float GRAVITY = 0.05f;
+
+	const VECTOR3 AABB_MIN = { -50, 0, -50 };
+	const VECTOR3 AABB_MAX = { 50, 0, 50 };
 }
 
 StageObject::StageObject(int objectNumber, const std::string& fileName, const Transform& t, int hp, int score)
@@ -38,6 +41,7 @@ StageObject::StageObject(int objectNumber, const std::string& fileName, const Tr
 	}
 
 	Collision::AddObject(this);
+	collider_ = new Collider(STAGE_OBJECT::AABB_MIN, STAGE_OBJECT::AABB_MAX);
 	Effect::Init();
 
 	// ツールとして必要なものの初期化

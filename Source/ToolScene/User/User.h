@@ -33,6 +33,8 @@ private:
 	bool isHit_;	// e’e‚ª“–‚½‚é‚© true¨“–‚½‚é
 	bool isAttack_; // UŒ‚i”­–Cj‚µ‚Ä‚¢‚é‚©
 
+	Collider* collider_;
+
 	// Æ€‚Ì‰æ‘œŠÖ˜A
 	image aiming_;		// Æ€‚Ì‰æ‘œ
 	image hitAiming_;	// Æ€‚ª‰½‚©‚É‚ ‚½‚é‚Æ‚«‚Ì‰æ‘œ

@@ -18,4 +18,5 @@ private:
 	Transform origin_; // 最初の位置
 	bool isGravity_; // 重力を加えるか true → 使用する
 
+	Collider* collider_;
 };
